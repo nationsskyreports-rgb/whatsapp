@@ -8,76 +8,53 @@
         :root { --primary: #1a2a3a; --secondary: #27ae60; --accent: #3498db; --danger: #e74c3c; --warning: #f39c12; }
         * { box-sizing: border-box; }
         body { font-family: 'Cairo', sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; color: #333; }
-
         .header { text-align: center; background: var(--primary); color: white; padding: 15px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: center; gap: 12px; }
         .header h1 { margin: 0; font-size: 22px; }
         .badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 700; }
         .badge-live { background: var(--secondary); color: white; }
         .badge-saving { background: var(--warning); color: white; }
         .badge-error { background: var(--danger); color: white; }
-
         .container { max-width: 1200px; margin: 20px auto; padding: 0 20px 100px; }
-
         .add-main-btn { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: var(--secondary); color: white; border: none; border-radius: 50%; font-size: 35px; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.3); z-index: 1001; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
         .add-main-btn:hover { transform: scale(1.1); background: #219150; }
         .add-main-btn:disabled { background: #aaa; cursor: not-allowed; transform: none; }
-
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 2000; }
         .overlay.active { display: flex; }
         .modal { background: white; width: 90%; max-width: 600px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideDown 0.3s ease; max-height: 90vh; overflow-y: auto; }
         @keyframes slideDown { from { transform: translateY(-40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .modal-header { border-bottom: 2px solid var(--secondary); padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
         .close-modal { background: none; border: none; font-size: 24px; cursor: pointer; color: #999; }
-
         label { font-weight: bold; font-size: 14px; display: block; margin-top: 15px; margin-bottom: 5px; color: var(--primary); }
         input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Cairo'; font-size: 14px; }
         .save-btn { width: 100%; padding: 14px; background: var(--secondary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 25px; font-size: 16px; font-family: 'Cairo'; transition: 0.3s; }
-        .save-btn:hover { background: #219150; }
         .save-btn:disabled { background: #aaa; cursor: not-allowed; }
-
         .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
         .tab-btn { padding: 10px 22px; border: 2px solid var(--primary); background: white; cursor: pointer; border-radius: 30px; font-weight: bold; color: var(--primary); transition: 0.3s; font-family: 'Cairo'; }
         .tab-btn.active { background: var(--primary); color: white; }
-
         .msg-row { display: grid; grid-template-columns: 1fr 1fr 110px; gap: 20px; background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); border-right: 6px solid var(--accent); transition: 0.2s; }
         .msg-row:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .en-card { text-align: left; direction: ltr; border-left: 1px solid #eee; padding-left: 20px; }
         .msg-text { font-size: 14.5px; line-height: 1.7; color: #333; margin: 0 0 12px 0; }
         .cat-info { font-size: 11px; background: #f0f2f5; padding: 3px 10px; border-radius: 5px; color: #555; font-weight: bold; display: inline-block; margin-bottom: 8px; }
-
         .copy-btn { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; font-size: 12px; background: #fff; font-weight: bold; transition: 0.2s; font-family: 'Cairo'; }
-        .copy-btn:hover { border-color: var(--accent); }
         .copy-btn.copied { background: var(--secondary); color: white; border-color: var(--secondary); }
-
         .actions { display: flex; flex-direction: column; gap: 10px; justify-content: center; }
         .action-btn { padding: 7px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; color: white; font-family: 'Cairo'; }
         .edit-btn { background: var(--warning); }
         .del-btn { background: var(--danger); }
-
         .state-msg { text-align: center; padding: 60px; color: #aaa; font-size: 16px; }
-
-        /* Setup screen */
-        .setup-card { background: white; max-width: 500px; margin: 40px auto; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-        .setup-card h2 { color: var(--primary); margin-bottom: 5px; }
-        .setup-card p { color: #777; font-size: 14px; margin-bottom: 20px; }
-        .setup-card .steps { font-size: 13px; color: #555; background: #f8f9fa; padding: 15px; border-radius: 8px; line-height: 2; margin-bottom: 20px; }
-        .setup-btn { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; font-family: 'Cairo'; }
     </style>
 </head>
 <body>
 
-<!-- ============================================================
-     ⚙️ الإعدادات — عدّل القيم دي بالبيانات بتاعتك
-     ============================================================ -->
 <script>
     const CONFIG = {
-        owner: 'YOUR_GITHUB_USERNAME',   // اسم حسابك على GitHub
-        repo:  'YOUR_REPO_NAME',         // اسم الـ Repository
-        file:  'data/scripts.json',      // مسار ملف البيانات داخل الـ repo
-        token: 'YOUR_GITHUB_TOKEN'       // Personal Access Token (repo scope)
+        owner: 'nationsskyreports-rgb',
+        repo:  'whatsapp',
+        file:  'data/scripts.json',
+        token: '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'
     };
 </script>
-<!-- ============================================================ -->
 
 <div class="header">
     <h1>Nations of Sky | Scripts Dashboard 🚀</h1>
@@ -113,30 +90,12 @@
 </div>
 
 <div class="container">
-    <div id="setup-screen" style="display:none">
-        <div class="setup-card">
-            <h2>⚙️ إعداد أول مرة</h2>
-            <p>عشان تشغّل الداشبورد المشترك، محتاج تعمل الخطوات دي مرة واحدة بس:</p>
-            <div class="steps">
-                1️⃣ افتح ملف <b>index.html</b> في الـ repo<br>
-                2️⃣ عدّل الـ CONFIG في أول السكريبت<br>
-                3️⃣ روح GitHub → Settings → Developer Settings → Tokens<br>
-                4️⃣ عمل Token جديد بصلاحية <b>repo</b><br>
-                5️⃣ ضع التوكن في CONFIG.token<br>
-                6️⃣ عمل ملف فاضي اسمه <b>data/scripts.json</b> في الـ repo وحطّ فيه: <code>{}</code>
-            </div>
-            <button class="setup-btn" onclick="location.reload()">✅ جاهز، حاول تاني</button>
-        </div>
-    </div>
     <div id="main-content">
-        <div class="state-msg">⏳ جاري تحميل البيانات من GitHub...</div>
+        <div class="state-msg">⏳ جاري تحميل البيانات...</div>
     </div>
 </div>
 
 <script>
-    // =====================
-    //  GitHub API Layer
-    // =====================
     const API = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.file}`;
     const HEADERS = {
         'Authorization': `token ${CONFIG.token}`,
@@ -157,24 +116,14 @@
     async function loadFromGitHub() {
         try {
             const res = await fetch(API, { headers: HEADERS });
-            if (res.status === 404) {
-                // الملف مش موجود، هنبدأ بـ {}
-                messages = {};
-                fileSha = null;
-                setStatus('✅ مشترك', 'live');
-                return true;
-            }
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            if (res.status === 404) { messages = {}; fileSha = null; setStatus('✅ مشترك', 'live'); return; }
+            if (!res.ok) throw new Error(res.status);
             const data = await res.json();
             fileSha = data.sha;
-            const decoded = atob(data.content.replace(/\n/g, ''));
-            messages = JSON.parse(decoded) || {};
+            messages = JSON.parse(atob(data.content.replace(/\n/g, ''))) || {};
             setStatus('✅ مشترك', 'live');
-            return true;
         } catch (e) {
-            console.error(e);
             setStatus('❌ خطأ في التحميل', 'error');
-            return false;
         }
     }
 
@@ -183,19 +132,14 @@
         setBusy(true);
         try {
             const content = btoa(unescape(encodeURIComponent(JSON.stringify(messages, null, 2))));
-            const body = {
-                message: `update scripts - ${new Date().toISOString()}`,
-                content,
-                ...(fileSha ? { sha: fileSha } : {})
-            };
+            const body = { message: 'update scripts', content, ...(fileSha ? { sha: fileSha } : {}) };
             const res = await fetch(API, { method: 'PUT', headers: HEADERS, body: JSON.stringify(body) });
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            if (!res.ok) throw new Error(res.status);
             const data = await res.json();
             fileSha = data.content.sha;
             setStatus('✅ مشترك', 'live');
             return true;
         } catch (e) {
-            console.error(e);
             setStatus('❌ فشل الحفظ', 'error');
             return false;
         } finally {
@@ -205,25 +149,13 @@
 
     function setBusy(busy) {
         document.getElementById('fab-btn').disabled = busy;
-        document.getElementById('save-btn').disabled = busy;
-        if (busy) {
-            document.getElementById('save-btn').textContent = 'جاري الحفظ...';
-        } else {
-            document.getElementById('save-btn').textContent = 'حفظ السكربت 💾';
-        }
+        const btn = document.getElementById('save-btn');
+        btn.disabled = busy;
+        btn.textContent = busy ? 'جاري الحفظ...' : 'حفظ السكربت 💾';
     }
 
-    // =====================
-    //  UI Functions
-    // =====================
-    function openModal() {
-        document.getElementById('msgModal').classList.add('active');
-    }
-
-    function closeModal() {
-        document.getElementById('msgModal').classList.remove('active');
-        resetForm();
-    }
+    function openModal() { document.getElementById('msgModal').classList.add('active'); }
+    function closeModal() { document.getElementById('msgModal').classList.remove('active'); resetForm(); }
 
     async function saveMessage() {
         const ar = document.getElementById('msg-ar').value.trim();
@@ -232,35 +164,30 @@
         const title = document.getElementById('msg-title').value.trim() || 'بدون عنوان';
         const editKey = document.getElementById('edit-key').value;
         if (!ar || !en) return alert('يرجى إكمال النصوص');
-
         const key = editKey || 'msg_' + Date.now();
         messages[key] = { category: cat, title, ar, en };
-
         const ok = await saveToGitHub();
         if (ok) { closeModal(); render(); }
     }
 
     function render(filter) {
         if (filter !== undefined) currentFilter = filter;
-        const display = document.getElementById('main-content');
         const allEntries = Object.entries(messages);
         const cats = [...new Set(allEntries.map(([, m]) => m.category))];
-
-        // تحديث datalist
         document.getElementById('cats-list').innerHTML = cats.map(c => `<option value="${c}">`).join('');
 
         const tabsHtml = [
-            `<button class="tab-btn ${currentFilter === 'all' ? 'active' : ''}" onclick="render('all')">الكل (${allEntries.length})</button>`,
+            `<button class="tab-btn ${currentFilter==='all'?'active':''}" onclick="render('all')">الكل (${allEntries.length})</button>`,
             ...cats.map(c => {
                 const cnt = allEntries.filter(([, m]) => m.category === c).length;
-                return `<button class="tab-btn ${currentFilter === c ? 'active' : ''}" onclick="render('${c}')">${c} (${cnt})</button>`;
+                return `<button class="tab-btn ${currentFilter===c?'active':''}" onclick="render('${c}')">${c} (${cnt})</button>`;
             })
         ].join('');
 
         const filtered = currentFilter === 'all' ? allEntries : allEntries.filter(([, m]) => m.category === currentFilter);
 
         const listHtml = filtered.length === 0
-            ? `<div class="state-msg">📭 لا توجد سكربتات${currentFilter !== 'all' ? ' في هذا القسم' : '، اضغط + لإضافة أول سكربت'}</div>`
+            ? `<div class="state-msg">📭 لا توجد سكربتات، اضغط + لإضافة أول سكربت</div>`
             : filtered.map(([key, msg]) => `
                 <div class="msg-row">
                     <div>
@@ -279,12 +206,10 @@
                     </div>
                 </div>`).join('');
 
-        display.innerHTML = `<div class="tabs">${tabsHtml}</div>${listHtml}`;
+        document.getElementById('main-content').innerHTML = `<div class="tabs">${tabsHtml}</div>${listHtml}`;
     }
 
-    function esc(str) {
-        return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    }
+    function esc(str) { return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
     function copyText(id, btn) {
         navigator.clipboard.writeText(document.getElementById(id)?.innerText || '');
@@ -294,8 +219,7 @@
     }
 
     function editMsg(key) {
-        const m = messages[key];
-        if (!m) return;
+        const m = messages[key]; if (!m) return;
         document.getElementById('msg-ar').value = m.ar;
         document.getElementById('msg-en').value = m.en;
         document.getElementById('msg-category').value = m.category;
@@ -313,44 +237,14 @@
     }
 
     function resetForm() {
-        ['msg-ar','msg-en','msg-category','msg-title','edit-key'].forEach(id => {
-            document.getElementById(id).value = '';
-        });
+        ['msg-ar','msg-en','msg-category','msg-title','edit-key'].forEach(id => document.getElementById(id).value = '');
         document.getElementById('form-title').innerText = 'إضافة سكربت جديد';
     }
 
-    document.getElementById('msgModal').addEventListener('click', function(e) {
-        if (e.target === this) closeModal();
-    });
+    document.getElementById('msgModal').addEventListener('click', function(e) { if (e.target===this) closeModal(); });
 
-    // تحقق من الإعداد وابدأ
-    async function init() {
-        const configured = CONFIG.owner !== 'YOUR_GITHUB_USERNAME' &&
-                           CONFIG.repo  !== 'YOUR_REPO_NAME' &&
-                           CONFIG.token !== 'YOUR_GITHUB_TOKEN';
-
-        if (!configured) {
-            document.getElementById('setup-screen').style.display = 'block';
-            document.getElementById('main-content').style.display = 'none';
-            setStatus('⚠️ يحتاج إعداد', 'error');
-            return;
-        }
-
-        const ok = await loadFromGitHub();
-        if (ok) render();
-        else {
-            document.getElementById('setup-screen').style.display = 'block';
-            document.getElementById('main-content').style.display = 'none';
-        }
-
-        // تحديث تلقائي كل دقيقة
-        setInterval(async () => {
-            await loadFromGitHub();
-            render();
-        }, 60000);
-    }
-
-    init();
+    loadFromGitHub().then(render);
+    setInterval(() => loadFromGitHub().then(render), 60000);
 </script>
 </body>
 </html>
