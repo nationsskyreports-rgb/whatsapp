@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Nations of Sky - Pro Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #1a2a3a; --secondary: #27ae60; --accent: #3498db; --danger: #e74c3c; --warning: #f39c12; }
+        body { font-family: 'Cairo', sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; color: #333; }
+        
+        .header { text-align: center; background: var(--primary); color: white; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .header h1 { margin: 0; font-size: 22px; }
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+
+        /* الزرار العائم للإضافة */
+        .add-main-btn { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: var(--secondary); color: white; border: none; border-radius: 50%; font-size: 35px; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.3); z-index: 1001; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .add-main-btn:hover { transform: scale(1.1); background: #219150; }
+
+        /* نظام النافذة المنبثقة (Modal) */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; width: 90%; max-width: 600px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; animation: slideDown 0.3s ease; }
+        
+        @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .modal-header { border-bottom: 2px solid var(--secondary); padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .close-modal { background: none; border: none; font-size: 24px; cursor: pointer; color: #999; }
+
+        /* ستايل الفورم داخل النافذة */
+        label { font-weight: bold; font-size: 14px; display: block; margin-top: 15px; margin-bottom: 5px; color: var(--primary); }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Cairo'; font-size: 14px; box-sizing: border-box; }
+        .save-btn { width: 100%; padding: 14px; background: var(--secondary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 25px; font-size: 16px; transition: 0.3s; }
+        .save-btn:hover { background: #219150; }
+
+        /* التبويبات والسكربتات */
+        .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
+        .tab-btn { padding: 10px 22px; border: 2px solid var(--primary); background: white; cursor: pointer; border-radius: 30px; font-weight: bold; color: var(--primary); transition: 0.3s; }
+        .tab-btn.active { background: var(--primary); color: white; }
+
+        .msg-row { display: grid; grid-template-columns: 1fr 1fr 110px; gap: 20px; background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); border-right: 6px solid var(--accent); transition: 0.2s; }
+        .msg-row:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .msg-card.en { text-align: left; direction: ltr; border-left: 1px solid #eee; padding-left: 20px; }
+        .msg-text { font-size: 14.5px; line-height: 1.7; color: #333; margin: 0 0 12px 0; }
+        .cat-info { font-size: 11px; background: #f0f2f5; padding: 3px 10px; border-radius: 5px; color: #555; font-weight: bold; display: inline-block; margin-bottom: 8px; }
+
+        .copy-btn { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; font-size: 12px; background: #fff; font-weight: bold; transition: 0.2s; }
+        .copy-btn:hover { border-color: var(--accent); background: #f8fbff; }
+        .copy-btn.copied { background: var(--secondary); color: white; border-color: var(--secondary); }
+
+        .actions { display: flex; flex-direction: column; gap: 10px; }
+        .action-btn { padding: 7px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; color: white; }
+        .edit-btn { background: var(--warning); }
+        .del-btn { background: var(--danger); }
+    </style>
+</head>
+<body>
+
+<button class="add-main-btn" onclick="openModal()">+</button>
+
+<div class="modal" id="msgModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="form-title" style="margin:0">إضافة سكربت جديد</h3>
+            <button class="close-modal" onclick="closeModal()">✕</button>
+        </div>
+        
+        <input type="hidden" id="edit-index" value="">
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+                <label>القسم (Category)</label>
+                <input type="text" id="msg-category" list="cats-list" placeholder="اختر أو اكتب قسماً...">
+                <datalist id="cats-list"></datalist>
+            </div>
+            <div>
+                <label>وصف (Title)</label>
+                <input type="text" id="msg-title" placeholder="مثلاً: رد ترحيبي">
+            </div>
+        </div>
+
+        <label>النص العربي</label>
+        <textarea id="msg-ar" rows="4" placeholder="اكتب النص العربي هنا..."></textarea>
+
+        <label>النص الإنجليزي (English)</label>
+        <textarea id="msg-en" rows="4" style="direction: ltr; text-align: left;" placeholder="Write English text here..."></textarea>
+
+        <button class="save-btn" onclick="saveMessage()">حفظ السكربت 💾</button>
+    </div>
+</div>
+
+<div class="header">
+    <h1>Nations of Sky | Scripts Dashboard 🚀</h1>
+</div>
+
+<div class="container">
+    <div class="tabs" id="tabs-container"></div>
+    <div id="messages-display"></div>
+</div>
+
+<script>
+    let messages = JSON.parse(localStorage.getItem('nations_v5_msgs')) || [];
+
+    function openModal() {
+        document.getElementById('msgModal').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('msgModal').classList.remove('active');
+        resetForm();
+    }
+
+    function saveMessage() {
+        const ar = document.getElementById('msg-ar').value;
+        const en = document.getElementById('msg-en').value;
+        const cat = document.getElementById('msg-category').value || 'عام';
+        const title = document.getElementById('msg-title').value || 'بدون عنوان';
+        const editIdx = document.getElementById('edit-index').value;
+
+        if(!ar || !en) return alert("يرجى إكمال النصوص");
+
+        const msgData = { category: cat, title: title, ar, en };
+
+        if(editIdx !== "") messages[editIdx] = msgData;
+        else messages.push(msgData);
+
+        localStorage.setItem('nations_v5_msgs', JSON.stringify(messages));
+        closeModal();
+        render();
+    }
+
+    function render(filter = 'الكل') {
+        const display = document.getElementById('messages-display');
+        const tabsContainer = document.getElementById('tabs-container');
+        const catsList = document.getElementById('cats-list');
+        
+        display.innerHTML = '';
+        const cats = ['الكل', ...new Set(messages.map(m => m.category))];
+        
+        tabsContainer.innerHTML = cats.map(c => 
+            `<button class="tab-btn ${filter === c ? 'active' : ''}" onclick="render('${c}')">${c}</button>`
+        ).join('');
+
+        catsList.innerHTML = cats.filter(c => c !== 'الكل').map(c => `<option value="${c}">`).join('');
+
+        messages.forEach((msg, index) => {
+            if(filter !== 'الكل' && msg.category !== filter) return;
+            display.innerHTML += `
+                <div class="msg-row">
+                    <div class="msg-card">
+                        <span class="cat-info">${msg.category} | ${msg.title}</span>
+                        <p class="msg-text" id="ar-${index}">${msg.ar}</p>
+                        <button class="copy-btn" onclick="copy('ar-${index}', this)">نسخ العربي</button>
+                    </div>
+                    <div class="msg-card en">
+                        <span class="cat-info">English Version</span>
+                        <p class="msg-text" id="en-${index}">${msg.en}</p>
+                        <button class="copy-btn" onclick="copy('en-${index}', this)">Copy English</button>
+                    </div>
+                    <div class="actions">
+                        <button class="action-btn edit-btn" onclick="editMsg(${index})">تعديل</button>
+                        <button class="action-btn del-btn" onclick="deleteMsg(${index})">حذف</button>
+                    </div>
+                </div>`;
+        });
+    }
+
+    function copy(id, btn) {
+        navigator.clipboard.writeText(document.getElementById(id).innerText);
+        const oldText = btn.innerText;
+        btn.innerText = "Copied! ✅";
+        btn.classList.add('copied');
+        setTimeout(() => { btn.innerText = oldText; btn.classList.remove('copied'); }, 1000);
+    }
+
+    function editMsg(index) {
+        const m = messages[index];
+        document.getElementById('msg-ar').value = m.ar;
+        document.getElementById('msg-en').value = m.en;
+        document.getElementById('msg-category').value = m.category;
+        document.getElementById('msg-title').value = m.title;
+        document.getElementById('edit-index').value = index;
+        document.getElementById('form-title').innerText = "تعديل السكربت";
+        openModal();
+    }
+
+    function deleteMsg(index) {
+        if(confirm("هل تريد حذف هذا السكربت؟")) {
+            messages.splice(index, 1);
+            localStorage.setItem('nations_v5_msgs', JSON.stringify(messages));
+            render();
+        }
+    }
+
+    function resetForm() {
+        document.getElementById('msg-ar').value = '';
+        document.getElementById('msg-en').value = '';
+        document.getElementById('msg-category').value = '';
+        document.getElementById('msg-title').value = '';
+        document.getElementById('edit-index').value = '';
+        document.getElementById('form-title').innerText = "إضافة سكربت جديد";
+    }
+
+    render();
+</script>
+</body>
+</html>
